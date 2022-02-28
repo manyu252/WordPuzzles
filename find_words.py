@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import os
+import time
 import sys
 import string
 
@@ -31,21 +31,13 @@ class GetWords(object):
         return self.words
 
     def check_validity(self):
-        result = []
+        result = list(set(self.words) & set(self.valid_words))
         # print("words:", self.words)
-        for word in self.words:
-            if word in self.valid_words:
-                result.append(word)
         return result
-
-    def remove_us(self):
-        for s in self.word:
-            if '_' in s:
-                self.words.remove(s)
-        return
 
 def main():
 
+    t1 = time.time()
     gw = GetWords()
 
     hints = sys.argv[1]
@@ -53,10 +45,12 @@ def main():
 
     words = []
     gw.letter_add(hints, words)
-    gw.remove_us
+
     result = gw.check_validity()
+    t2 = time.time()
 
     print("result:", result)
+    print("time:", t2-t1)
 
 if __name__ == "__main__":
     main()
