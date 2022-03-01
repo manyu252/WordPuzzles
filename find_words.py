@@ -47,7 +47,7 @@ def main():
     t2 = time.time()
 
     print("result:", result)
-    print("time:", t2-t1)
+    print("time:", t2-t1, " seconds")
 
 if __name__ == "__main__":
     main()
