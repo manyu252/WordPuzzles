@@ -1,4 +1,5 @@
 import time
+import sys
 import string
 
 class GetWords(object):
@@ -18,7 +19,7 @@ class GetWords(object):
         for ind, s in enumerate(hints):
             if s == "_":
                 for a in self.alphabets:
-                    copy_hints = hints.copy()
+                    copy_hints = hints[:]
                     copy_hints[ind] = a
                     words = self.letter_add(copy_hints, words)
                     word = ''.join([str(elem) for elem in copy_hints])
@@ -36,7 +37,11 @@ class GetWords(object):
 def main():
 
     gw = GetWords()
-    hints = input("Enter the hints: ")
+    if sys.version_info.major == 3:
+        hints = input("Enter the hints: ")
+    else:
+        hints = raw_input("Enter the hints: ")
+
     hints = list(hints)
     t1 = time.time()
 
