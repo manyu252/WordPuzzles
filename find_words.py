@@ -13,6 +13,7 @@ class GetWords(object):
         valid_words = []
         with open('/usr/share/dict/words') as word_file:
             valid_words = word_file.read().split()
+        valid_words = (map(lambda x: x.lower(), valid_words))
         return valid_words
 
     def letter_add(self, hints, words):
@@ -42,6 +43,7 @@ def main():
     else:
         hints = raw_input("Enter the incomplete word: ")
 
+    hints = hints.lower()
     hints = list(hints)
     t1 = time.time()
 
