@@ -1,6 +1,4 @@
-#!/usr/bin/python
 import time
-import sys
 import string
 
 class GetWords(object):
@@ -37,11 +35,10 @@ class GetWords(object):
 
 def main():
 
-    t1 = time.time()
     gw = GetWords()
-
-    hints = sys.argv[1]
+    hints = input("Enter the hints: ")
     hints = list(hints)
+    t1 = time.time()
 
     words = []
     gw.letter_add(hints, words)
