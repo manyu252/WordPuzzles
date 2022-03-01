@@ -38,9 +38,9 @@ def main():
 
     gw = GetWords()
     if sys.version_info.major == 3:
-        hints = input("Enter the hints: ")
+        hints = input("Enter the incomplete word: ")
     else:
-        hints = raw_input("Enter the hints: ")
+        hints = raw_input("Enter the incomplete word: ")
 
     hints = list(hints)
     t1 = time.time()
