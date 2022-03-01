@@ -39,12 +39,13 @@ class GetWords(object):
         if len(self.words) == 0:
             print("No such word exists. Please check your conditions and the incomplete word you entered")
             return
+        print(len(self.words), "possible outcomes -")
         for word in self.words:
             print(word)
         return
 
     def include_words(self, include):
-        self.words = [word for word in self.words if any(char in word for char in include)]
+        self.words = [word for word in self.words if all(char in word for char in include)]
         return
 
     def remove_words(self, remove):
