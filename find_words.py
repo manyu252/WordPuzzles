@@ -1,3 +1,4 @@
+import os
 import time
 import sys
 import string
@@ -65,6 +66,13 @@ def main():
         print("Just press 'Enter' if you don't have any specific conditions. Conditions -")
         include = raw_input("include alphabets: ")
         remove = raw_input("omit alphabets: ")
+
+    if hints.count('_') > 4:
+        print("ERROR:: Maximum 4 blanks are allowed and you have", hints.count('_'), "blanks in the word search.")
+        os._exit(-1)
+
+    if hints.count('_') == 4:
+        print("PROCESSING :: Wait for a few seconds.")
 
     t1 = time.time()
     if len(include) > 0:
