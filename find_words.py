@@ -2,11 +2,27 @@ import os
 import time
 import sys
 import string
+import signal
+from contextlib import contextmanager
+
+class TimeoutException(Exception): pass
+
+@contextmanager
+def time_limit(seconds):
+    def signal_handler(signum, frame):
+        raise TimeoutException("Timed out!")
+    signal.signal(signal.SIGALRM, signal_handler)
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
 
 class GetWords(object):
     def __init__(self):
         self.alphabets = list(string.ascii_lowercase)
         self.words = []
+        self.remove = []
         self.valid_words = self.load_words()
         return
 
@@ -21,6 +37,8 @@ class GetWords(object):
         for ind, s in enumerate(hints):
             if s == "_":
                 for a in self.alphabets:
+                    if a in self.remove:
+                        continue
                     copy_hints = hints[:]
                     copy_hints[ind] = a
                     words = self.letter_add(copy_hints, words)
@@ -40,9 +58,10 @@ class GetWords(object):
         if len(self.words) == 0:
             print("No such word exists. Please check your conditions and the incomplete word you entered")
             return
-        print(len(self.words), "possible outcomes -")
         for word in self.words:
             print(word)
+        print("\n")
+        print(len(self.words), "possible outcomes.")
         return
 
     def include_words(self, include):
@@ -67,14 +86,17 @@ def main():
         include = raw_input("include alphabets: ")
         remove = raw_input("omit alphabets: ")
 
-    if hints.count('_') > 4:
-        print("ERROR:: Maximum 4 blanks are allowed and you have", hints.count('_'), "blanks in the word search.")
+    t1 = time.time()
+
+    hints = hints.lower()
+    hints = list(hints)
+
+    if '_' not in hints:
+        print("Only 1 possible outcome: ", ''.join(hints))
         os._exit(-1)
 
-    if hints.count('_') == 4:
-        print("PROCESSING :: Wait for a few seconds.")
+    print("PROCESSING :: Wait for a few seconds.")
 
-    t1 = time.time()
     if len(include) > 0:
         include = include.lower()
     else:
@@ -82,14 +104,21 @@ def main():
 
     if len(remove) > 0:
         remove = remove.lower()
+        if include is not None:
+            remove = [char for char in remove if char not in include]
+        remove = [char for char in remove if char not in hints]
+        gw.remove = remove
     else:
         remove = None
 
-    hints = hints.lower()
-    hints = list(hints)
-
     words = []
-    gw.letter_add(hints, words)
+    try:
+        with time_limit(20):
+            gw.letter_add(hints, words)
+    except TimeoutException as e:
+        print("\nREQUEST TIMED OUT!! \nPlease reduce the number of '_' or give more alphabets to omit.")
+        os._exit(-1)
+
     if not remove == None:
         gw.remove_words(remove)
     if not include == None:
@@ -100,8 +129,7 @@ def main():
     gw.print_words()
 
     t2 = time.time()
-    print('\n')
-    print("time:", t2-t1, " seconds")
+    print("time: {:.2f} seconds".format(t2-t1))
 
 if __name__ == "__main__":
     main()
