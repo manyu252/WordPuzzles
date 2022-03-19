@@ -28,7 +28,7 @@ class GetWords(object):
 
     def load_words(self):
         valid_words = []
-        with open('/usr/share/dict/words') as word_file:
+        with open('words.txt') as word_file:
             valid_words = word_file.read().split()
         valid_words = (map(lambda x: x.lower(), valid_words))
         return valid_words
