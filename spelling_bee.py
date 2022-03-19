@@ -20,6 +20,8 @@ def main():
 
     t1 = time.time()
 
+    neccessary_letter = neccessary_letter.replace(" ", "")
+    include = include.replace(" ", "")
     include = list(include.lower())
     include.append(neccessary_letter)
     gw.remove = [char for char in gw.alphabets if char not in include]

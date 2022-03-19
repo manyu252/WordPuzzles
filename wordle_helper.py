@@ -21,6 +21,9 @@ def main():
     t1 = time.time()
 
     hints = hints.lower()
+    print(hints)
+    hints = hints.replace(" ", "")
+    print(hints)
     hints = list(hints)
 
     if '_' not in hints:
@@ -31,11 +34,13 @@ def main():
 
     if len(include) > 0:
         include = include.lower()
+        include = include.replace(" ", "")
     else:
         include = None
 
     if len(remove) > 0:
         remove = remove.lower()
+        remove = remove.replace(" ", "")
         if include is not None:
             remove = [char for char in remove if char not in include]
         remove = [char for char in remove if char not in hints]
