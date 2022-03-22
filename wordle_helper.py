@@ -21,9 +21,7 @@ def main():
     t1 = time.time()
 
     hints = hints.lower()
-    print(hints)
     hints = hints.replace(" ", "")
-    print(hints)
     hints = list(hints)
 
     if '_' not in hints:
