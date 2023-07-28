@@ -1,5 +1,10 @@
-Supports only MacOS and Linux for now.
-Windows support will come soon.
+Supports only MacOS and Linux.
+<!-- Windows support will come soon. -->
+
+# Usage
+To run the code for wordle, double click the ```wordle_helper.command``` file.
+
+To run the code for spelling bee, double click the ```spelling_bee.command``` file.
 
 # wordle_helper
 This code aims to assist you to find legitimate words when a few characters are missing.
