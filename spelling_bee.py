@@ -45,5 +45,7 @@ def main():
     t2 = time.time()
     print("time: {:.2f} seconds".format(t2-t1))
 
+    block = input()
+
 if __name__ == "__main__":
     main()
